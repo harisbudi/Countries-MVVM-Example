@@ -1,11 +1,9 @@
 package com.example.countries.view
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.example.countries.R
@@ -33,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     fun observeViewModel(){
         viewModel.countries.observe(this, Observer { countries ->
             countries?.let {
+                recyclerView.visibility = View.VISIBLE
                 countriesAdapter.updateCountry(it)
             }
         })
