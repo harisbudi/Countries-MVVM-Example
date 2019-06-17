@@ -1,22 +1,19 @@
 package com.example.countries.model
 
+import com.example.countries.di.DaggerApiComponent
 import io.reactivex.Single
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 class CountriesService {
-    private val BASE_URL = "https://raw.githubusercontent.com/"
-    private val api:CounriesApi
+
+    @Inject
+    lateinit var api: CounriesApi
+
     init {
-        api = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-            .create(CounriesApi::class.java)
+        DaggerApiComponent.create().inject(this)
     }
-    fun getCountries(): Single<List<Country>>{
+
+    fun getCountries(): Single<List<Country>> {
         return api.getCountries()
     }
 }
